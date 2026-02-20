@@ -1,0 +1,29 @@
+{
+    "name": "nativephp/mobile-audio",
+    "description": "Audio player plugin for NativePHP Mobile apps",
+    "type": "nativephp-plugin",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "nativephp/mobile": "^3.0",
+        "illuminate/support": "^11.0|^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Native\\Mobile\\Audio\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Native\\Mobile\\Audio\\AudioServiceProvider"
+            ],
+            "aliases": {
+                "Audio": "Native\\Mobile\\Audio\\Facades\\Audio"
+            }
+        },
+        "nativephp": {
+            "manifest": "nativephp.json"
+        }
+    }
+}

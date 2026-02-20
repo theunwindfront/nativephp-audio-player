@@ -1,0 +1,88 @@
+{
+    "namespace": "Audio",
+
+    "bridge_functions": [
+        {
+            "name": "Audio.play",
+            "android": "com.nativephp.audio.AudioFunctions.play",
+            "ios": "AudioFunctions.play",
+            "description": "Play an audio file from a URL or local path"
+        },
+        {
+            "name": "Audio.pause",
+            "android": "com.nativephp.audio.AudioFunctions.pause",
+            "ios": "AudioFunctions.pause",
+            "description": "Pause the current audio playback"
+        },
+        {
+            "name": "Audio.resume",
+            "android": "com.nativephp.audio.AudioFunctions.resume",
+            "ios": "AudioFunctions.resume",
+            "description": "Resume the paused audio playback"
+        },
+        {
+            "name": "Audio.stop",
+            "android": "com.nativephp.audio.AudioFunctions.stop",
+            "ios": "AudioFunctions.stop",
+            "description": "Stop the audio playback and reset the position"
+        },
+        {
+            "name": "Audio.seek",
+            "android": "com.nativephp.audio.AudioFunctions.seek",
+            "ios": "AudioFunctions.seek",
+            "description": "Seek to a specific position in the audio (in seconds)"
+        },
+        {
+            "name": "Audio.setVolume",
+            "android": "com.nativephp.audio.AudioFunctions.setVolume",
+            "ios": "AudioFunctions.setVolume",
+            "description": "Set the audio volume (0.0 to 1.0)"
+        },
+        {
+            "name": "Audio.getDuration",
+            "android": "com.nativephp.audio.AudioFunctions.getDuration",
+            "ios": "AudioFunctions.getDuration",
+            "description": "Get the duration of the current audio in seconds"
+        },
+        {
+            "name": "Audio.getCurrentPosition",
+            "android": "com.nativephp.audio.AudioFunctions.getCurrentPosition",
+            "ios": "AudioFunctions.getCurrentPosition",
+            "description": "Get the current playback position in seconds"
+        }
+    ],
+
+    "android": {
+        "min_version": 21,
+        "permissions": [
+            "android.permission.INTERNET"
+        ],
+        "dependencies": {
+            "implementation": []
+        },
+        "activities": [],
+        "services": [],
+        "receivers": [],
+        "providers": []
+    },
+
+    "ios": {
+        "min_version": "13.0",
+        "info_plist": {
+            "NSAppleMusicUsageDescription": "We need access to your music library to play audio files."
+        },
+        "dependencies": {
+            "swift_packages": [],
+            "pods": []
+        }
+    },
+
+    "events": [
+        "Native\\Mobile\\Audio\\Events\\PlaybackStarted",
+        "Native\\Mobile\\Audio\\Events\\PlaybackPaused",
+        "Native\\Mobile\\Audio\\Events\\PlaybackStopped",
+        "Native\\Mobile\\Audio\\Events\\PlaybackCompleted"
+    ],
+
+    "hooks": {}
+}
