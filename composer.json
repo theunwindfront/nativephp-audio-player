@@ -1,5 +1,5 @@
 {
-    "name": "nativephp/mobile-audio",
+    "name": "nativephp/audio-player",
     "description": "Audio player plugin for NativePHP Mobile apps",
     "type": "nativephp-plugin",
     "license": "MIT",
