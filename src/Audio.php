@@ -9,17 +9,7 @@ class Audio
      */
     public function play(string $url): bool
     {
-        if (function_exists('nativephp_call')) {
-            $result = nativephp_call('Audio.play', json_encode(['url' => $url]));
-
-            if ($result) {
-                $decoded = json_decode($result);
-
-                return $decoded->success ?? false;
-            }
-        }
-
-        return false;
+        return $this->call('Audio.play', ['url' => $url]);
     }
 
     /**
@@ -27,17 +17,7 @@ class Audio
      */
     public function pause(): bool
     {
-        if (function_exists('nativephp_call')) {
-            $result = nativephp_call('Audio.pause', '{}');
-
-            if ($result) {
-                $decoded = json_decode($result);
-
-                return $decoded->success ?? false;
-            }
-        }
-
-        return false;
+        return $this->call('Audio.pause');
     }
 
     /**
@@ -45,17 +25,7 @@ class Audio
      */
     public function resume(): bool
     {
-        if (function_exists('nativephp_call')) {
-            $result = nativephp_call('Audio.resume', '{}');
-
-            if ($result) {
-                $decoded = json_decode($result);
-
-                return $decoded->success ?? false;
-            }
-        }
-
-        return false;
+        return $this->call('Audio.resume');
     }
 
     /**
@@ -63,17 +33,7 @@ class Audio
      */
     public function stop(): bool
     {
-        if (function_exists('nativephp_call')) {
-            $result = nativephp_call('Audio.stop', '{}');
-
-            if ($result) {
-                $decoded = json_decode($result);
-
-                return $decoded->success ?? false;
-            }
-        }
-
-        return false;
+        return $this->call('Audio.stop');
     }
 
     /**
@@ -81,17 +41,7 @@ class Audio
      */
     public function seek(float $seconds): bool
     {
-        if (function_exists('nativephp_call')) {
-            $result = nativephp_call('Audio.seek', json_encode(['seconds' => $seconds]));
-
-            if ($result) {
-                $decoded = json_decode($result);
-
-                return $decoded->success ?? false;
-            }
-        }
-
-        return false;
+        return $this->call('Audio.seek', ['seconds' => $seconds]);
     }
 
     /**
@@ -102,18 +52,7 @@ class Audio
     public function setVolume(float $level): bool
     {
         $level = max(0.0, min(1.0, $level));
-
-        if (function_exists('nativephp_call')) {
-            $result = nativephp_call('Audio.setVolume', json_encode(['level' => $level]));
-
-            if ($result) {
-                $decoded = json_decode($result);
-
-                return $decoded->success ?? false;
-            }
-        }
-
-        return false;
+        return $this->call('Audio.setVolume', ['level' => $level]);
     }
 
     /**
@@ -150,5 +89,32 @@ class Audio
         }
 
         return null;
+    }
+
+    /**
+     * Execute a bridge call or relay to the frontend in development mode
+     */
+    protected function call(string $method, array $params = []): bool
+    {
+        // 1. Production Mode: Native bridge call (works when code is in APK)
+        if (function_exists('nativephp_call')) {
+            $result = nativephp_call($method, json_encode($params));
+
+            if ($result) {
+                $decoded = json_decode($result);
+                return $decoded->success ?? false;
+            }
+            return false;
+        }
+
+        // 2. Jump Mode Relay: Dispatch to Livewire frontend
+        if (class_exists(\Livewire\Livewire::class)) {
+            \Livewire\Livewire::dispatch('native-call', [
+                'method' => $method,
+                'params' => $params
+            ]);
+        }
+
+        return true;
     }
 }

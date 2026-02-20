@@ -4,20 +4,24 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
+import android.util.Log
 import org.json.JSONObject
 
 class AudioFunctions {
     companion object {
+        private const val TAG = "AudioFunctions"
         private var mediaPlayer: MediaPlayer? = null
 
         @JvmStatic
         fun play(context: Context, params: JSONObject): JSONObject {
             val url = params.optString("url")
+            Log.d(TAG, "🎵 Playing audio: $url")
             val result = JSONObject()
 
             try {
                 mediaPlayer?.stop()
                 mediaPlayer?.release()
+                mediaPlayer = null
 
                 mediaPlayer = MediaPlayer().apply {
                     setAudioAttributes(
@@ -26,12 +30,25 @@ class AudioFunctions {
                             .setUsage(AudioAttributes.USAGE_MEDIA)
                             .build()
                     )
-                    setDataSource(context, Uri.parse(url))
+
+                    if (url.startsWith("asset:///")) {
+                        val assetPath = url.substring(9) // remove "asset:///"
+                        Log.d(TAG, "📦 Loading from assets: $assetPath")
+                        val afd = context.assets.openFd(assetPath)
+                        setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+                        afd.close()
+                    } else {
+                        Log.d(TAG, "🌐 Loading from URL: $url")
+                        setDataSource(context, Uri.parse(url))
+                    }
+
                     prepare()
                     start()
                 }
+                Log.d(TAG, "✅ Playback started successfully")
                 result.put("success", true)
             } catch (e: Exception) {
+                Log.e(TAG, "❌ Playback failed: ${e.message}", e)
                 result.put("success", false)
                 result.put("error", e.message)
             }

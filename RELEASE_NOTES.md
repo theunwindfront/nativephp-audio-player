@@ -1,50 +1,66 @@
-## 🎵 NativePHP Audio Player v1.0.0
+# NativePHP Audio Player — Release Notes
 
-### Features
+---
 
-✨ **Core Audio Playback**
-- Native audio playback for iOS and Android devices
-- Support for multiple audio formats (MP3, WAV, AAC, FLAC)
-- Seamless integration with NativePHP framework
+## v1.0.3 — 2026-02-20
 
-🎛️ **Playback Controls**
-- Play, pause, and stop controls
-- Volume control with real-time adjustment
-- Seek functionality for precise track positioning
-- Playback speed adjustment
+### What's New
 
-📊 **Playback Information**
-- Real-time duration and current position tracking
-- Audio metadata display (title, artist, album)
-- Buffering state monitoring
-- Error handling and reporting
+**🔄 Dual-Mode Bridge Architecture**
 
-🔊 **Audio Management**
-- Queue management for multiple audio files
-- Playlist support for sequential playback
-- Audio focus handling for device interruptions
-- Background playback capability
+The package now handles audio playback automatically across both development and production environments — no extra setup required.
 
-📱 **Cross-Platform Support**
-- iOS native implementation (Swift)
-- Android native implementation (Kotlin)
-- Unified PHP API for both platforms
+- **Production (APK/IPA)**: Routes through `nativephp_call()` → native Android `MediaPlayer` / iOS `AVAudioPlayer`
+- **Jump Mode (Development)**: Automatically relays via Livewire → JavaScript → Browser `Audio()` API fallback
 
-🎚️ **Advanced Features**
-- Audio effects and equalizer controls
-- Repeat and shuffle functionality
-- Progress callbacks and event listeners
-- Media session integration
+**🖼️ `@nativeAudioBridge` Blade Directive**
 
-### Technical Stack
-- **PHP** (57%) - Core plugin logic and API
-- **Kotlin** (26%) - Android native implementation
-- **Swift** (17%) - iOS native implementation
+A new, zero-configuration Blade directive that injects the necessary JavaScript relay logic into your view. Drop it once at the top of your Livewire component and the package handles the rest.
 
-### Getting Started
-Install via Composer and integrate into your NativePHP application for seamless audio playback functionality across iOS and Android devices.
+```blade
+@nativeAudioBridge
+<div x-data="gameData()">
+    ...
+</div>
+```
 
-### Support
-- Full documentation and examples included
-- Test suite for validation
-- Active development and community support
+**📦 Centralized `call()` Method**
+
+Refactored all bridge calls to route through a single internal `call()` method in `Audio.php`. This eliminates repetitive boilerplate across all `play()`, `pause()`, `stop()`, `seek()`, and `setVolume()` methods and ensures consistent behavior.
+
+**✅ Zero NativePHP Shell Modifications Required**
+
+The relay mechanism is entirely self-contained within this package. No changes to `MainActivity.kt` or any vendor NativePHP files are needed.
+
+### Changed
+
+- `Audio::play()`, `pause()`, `resume()`, `stop()`, `seek()`, `setVolume()` — all now use centralized `call()` method internally
+- `AudioServiceProvider::boot()` — registers the `@nativeAudioBridge` Blade directive
+- README fully updated with architecture diagrams, correct namespaces, and development/production instructions
+
+---
+
+## v1.0.2 — 2026-02-20
+
+- Renamed package to `nativephp/audio-player`
+- Updated namespace to `Native\Mobile\Audio`
+
+---
+
+## v1.0.1 — 2026-02-20
+
+- Reorganized Android source files
+- Added bridge function registration (`AudioBridge`)
+- Kotlin `AudioFunctions` class registered with `BridgeFunctionRegistry`
+
+---
+
+## v1.0.0 — 2026-02-20
+
+Initial release.
+
+- Native audio playback for Android and iOS
+- Play, pause, resume, stop, seek, volume control
+- Duration and position querying
+- NativePHP plugin manifest (`nativephp.json`)
+- PHP Facade: `Native\Mobile\Audio\Facades\Audio`
