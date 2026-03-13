@@ -1,0 +1,30 @@
+{
+    "name": "theunwindfront/audio",
+    "description": "Audio player plugin for NativePHP Mobile apps",
+    "version": "1.0.0",
+    "type": "nativephp-plugin",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "nativephp/mobile": "^3.0",
+        "illuminate/support": "^11.0|^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Theunwindfront\\Audio\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Theunwindfront\\Audio\\AudioServiceProvider"
+            ],
+            "aliases": {
+                "Audio": "Theunwindfront\\Audio\\Facades\\Audio"
+            }
+        },
+        "nativephp": {
+            "manifest": "nativephp.json"
+        }
+    }
+}

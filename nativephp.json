@@ -1,0 +1,88 @@
+{
+    "namespace": "Audio",
+
+    "bridge_functions": [
+        {
+            "name": "Audio.play",
+            "android": "com.theunwindfront.audio.AudioFunctions.Play",
+            "ios": "AudioFunctions.Play",
+            "description": "Play an audio file from a URL or local path"
+        },
+        {
+            "name": "Audio.pause",
+            "android": "com.theunwindfront.audio.AudioFunctions.Pause",
+            "ios": "AudioFunctions.Pause",
+            "description": "Pause the current audio playback"
+        },
+        {
+            "name": "Audio.resume",
+            "android": "com.theunwindfront.audio.AudioFunctions.Resume",
+            "ios": "AudioFunctions.Resume",
+            "description": "Resume the paused audio playback"
+        },
+        {
+            "name": "Audio.stop",
+            "android": "com.theunwindfront.audio.AudioFunctions.Stop",
+            "ios": "AudioFunctions.Stop",
+            "description": "Stop the audio playback and reset the position"
+        },
+        {
+            "name": "Audio.seek",
+            "android": "com.theunwindfront.audio.AudioFunctions.Seek",
+            "ios": "AudioFunctions.Seek",
+            "description": "Seek to a specific position in the audio (in seconds)"
+        },
+        {
+            "name": "Audio.setVolume",
+            "android": "com.theunwindfront.audio.AudioFunctions.SetVolume",
+            "ios": "AudioFunctions.SetVolume",
+            "description": "Set the audio volume (0.0 to 1.0)"
+        },
+        {
+            "name": "Audio.getDuration",
+            "android": "com.theunwindfront.audio.AudioFunctions.GetDuration",
+            "ios": "AudioFunctions.GetDuration",
+            "description": "Get the duration of the current audio in seconds"
+        },
+        {
+            "name": "Audio.getCurrentPosition",
+            "android": "com.theunwindfront.audio.AudioFunctions.GetCurrentPosition",
+            "ios": "AudioFunctions.GetCurrentPosition",
+            "description": "Get the current playback position in seconds"
+        }
+    ],
+
+    "android": {
+        "min_version": 21,
+        "permissions": [
+            "android.permission.INTERNET"
+        ],
+        "dependencies": {
+            "implementation": []
+        },
+        "activities": [],
+        "services": [],
+        "receivers": [],
+        "providers": []
+    },
+
+    "ios": {
+        "min_version": "13.0",
+        "info_plist": {
+            "NSAppleMusicUsageDescription": "We need access to your music library to play audio files."
+        },
+        "dependencies": {
+            "swift_packages": [],
+            "pods": []
+        }
+    },
+
+    "events": [
+        "Theunwindfront\\Audio\\Events\\PlaybackStarted",
+        "Theunwindfront\\Audio\\Events\\PlaybackPaused",
+        "Theunwindfront\\Audio\\Events\\PlaybackStopped",
+        "Theunwindfront\\Audio\\Events\\PlaybackCompleted"
+    ],
+
+    "hooks": {}
+}
