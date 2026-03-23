@@ -1,4 +1,11 @@
+## 🚧 Coming Soon (v1.1.0)
+
+- **MediaSession Support**: Full track metadata (artist, title, album, etc.) on Bluetooth devices and OS media controls.
+- **Remote Control Commands**: Handle play/pause/prev/next from headphones and lock screens.
+- **Improved Background Playback**: Better stability for long-running audio sessions.
+
 ## 🎵 NativePHP Audio Player v1.0.2
+
 
 ### Fixes
 - **Android**: Fixed incorrect `BridgeFunction` import in `AudioFunctions.kt`.

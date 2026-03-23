@@ -10,6 +10,16 @@ A NativePHP plugin for audio playback on mobile devices.
 - **Volume Control** - Set volume programmatically
 - **Duration/Position** - Get audio duration and current position
 
+## 🚀 Future Roadmap
+
+I'm actively working on the following features and will update the package soon:
+
+- **MediaSession Support** - Send track metadata (artist, title, album, artwork) to Bluetooth devices, lock screens, and OS media centers.
+- **Remote Controls** - Handle playback commands (play, pause, next, previous) from connected devices and headphone buttons.
+- **Audio Focus** - Automatic pausing/ducking when other apps play audio or during incoming calls.
+- **Background Playback** - Enhanced support for playing audio when the app is in the background or the screen is off.
+
+
 ## Installation
 
 ```bash
